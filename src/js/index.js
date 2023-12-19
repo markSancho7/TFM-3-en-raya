@@ -1,53 +1,65 @@
 const boardGameElement = document.getElementById('boardGame');
 const turnElement = document.getElementById('turn');
+const winnerElement = document.getElementById('winner');
+const buttonRestartELement = document.getElementById('buttonRestart');
 
-let counterCircle = 0;
-let counterEx = 0;
+const boardPosition = ['', '', '', '', '', '', '', '', ''];
+const winnerCombinations = [
+	'0-1-2',
+	'3-4-5',
+	'6-7-8',
+	'0-3-6',
+	'1-4-7',
+	'2-5-8',
+	'0-4-8',
+	'2-4-6'
+];
+let currentPlayer = 'X';
+buttonRestartELement.disabled = true;
 
-const selectCell = event => {
-	console.log(event.target.tagName);
-	if (event.target.tagName === 'SPAN');
-	else {
-		if (counterCircle === counterEx) {
-			console.log('circulo');
-			const circle = document.createElement('span');
-			circle.textContent = 'O';
-			circle.id = 'circle';
-			event.target.append(circle);
-			turnElement.textContent = 'Turn Ex';
-			counterCircle++;
-		} else {
-			console.log('equis');
-			const ex = document.createElement('span');
-			ex.textContent = 'X';
-			ex.id = 'ex';
-			event.target.append(ex);
-			turnElement.textContent = 'Turn Cicle';
-			counterEx++;
+// pintar tablero y pintar array
+const printTurn = () => {
+	turnElement.textContent = `Turn ${currentPlayer}`;
+};
+// cambio de jugador
+const changePlayer = () => {
+	if (currentPlayer === 'X') {
+		currentPlayer = 'O';
+	} else {
+		currentPlayer = 'X';
+	}
+	printTurn();
+};
+
+const checkWinner = () => {
+	for (let i = 0; i < winnerCombinations.length; i++) {
+		const currentCombination = winnerCombinations[i];
+		const position = currentCombination.split('-');
+		if (
+			boardPosition[position[0]] === currentPlayer &&
+			boardPosition[position[1]] === currentPlayer &&
+			boardPosition[position[2]] === currentPlayer
+		) {
+			buttonRestartELement.disabled = false;
+			turnElement.classList.add('hide');
+			winnerElement.textContent = `THE WINNER IS ${currentPlayer}`;
+			winnerElement.classList.remove('hide');
+			boardGameElement.removeEventListener('click', printSimbol);
 		}
 	}
-	verifyWiner();
-};
-const verifyWiner = () => {
-	console.log(boardGameElement.children[0].children[0].id);
-	if (!boardGameElement) {
-		console.log('pepe');
-	}
-	if (
-		(boardGameElement.children[3].children[0].id,
-		boardGameElement.children[4].children[0].id,
-		boardGameElement.children[5].children[0].id) === 'circle'
-	) {
-		turnElement.textContent = 'GANASTE';
-	} else if (
-		(boardGameElement.children[0].children[0].id,
-		boardGameElement.children[1].children[0].id,
-		boardGameElement.children[2].children[0].id === 'circle')
-	) {
-		console.log('ganstes');
-	} else {
-		turnElement.textContent = 'GANO EX';
-	}
+	changePlayer();
 };
 
-boardGameElement.addEventListener('click', selectCell);
+const printSimbol = event => {
+	const position = event.target.dataset.position;
+	if (boardPosition[position] !== '') return;
+	boardPosition[position] = currentPlayer;
+	boardGameElement.children[position].textContent = currentPlayer;
+	checkWinner();
+};
+const restartGame = () => {
+	location.reload();
+};
+
+buttonRestartELement.addEventListener('click', restartGame);
+boardGameElement.addEventListener('click', printSimbol);

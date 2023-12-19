@@ -11,21 +11,23 @@
 	<body>
 		<h1 class="center">Tres en Raya</h1>
 		<div id="boardGame" class="boardGame">
-			<div id="cell1" class="borderRight borderBottom"></div>
-			<div id="cell2" class="borderBottom borderLeft borderRight"></div>
-			<div id="cell3" class="borderLeft borderBottom"></div>
-			<div id="cell4" class="borderTop borderRight borderBottom"></div>
+			<div data-position="0" class="borderRight borderBottom"></div>
+			<div data-position="1" class="borderBottom borderLeft borderRight"></div>
+			<div data-position="2" class="borderLeft borderBottom"></div>
+			<div data-position="3" class="borderTop borderRight borderBottom"></div>
 			<div
-				id="cell5"
+				data-position="4"
 				class="borderLeft borderBottom borderRight borderTop"
 			></div>
-			<div id="cell6" class="borderLeft borderTop borderBottom"></div>
-			<div id="cell7" class="borderTop borderRight"></div>
-			<div id="cell8" class="borderTop borderLeft borderRight"></div>
-			<div id="cell9" class="borderTop borderLeft"></div>
+			<div data-position="5" class="borderLeft borderTop borderBottom"></div>
+			<div data-position="6" class="borderTop borderRight"></div>
+			<div data-position="7" class="borderTop borderLeft borderRight"></div>
+			<div data-position="8" class="borderTop borderLeft"></div>
 		</div>
 		<div>
-			<h2 id="turn" class="turn center">Turn Circle</h2>
+			<h2 id="turn" class="turn center">Turn X</h2>
+			<h2 id="winner" class="hide turn center"></h2>
+			<button id="buttonRestart" class="buttonRestart">RESTART</button>
 		</div>
 		<!-- <img src="./assets/images/cute-cat.webp" alt="" /> -->
 		<script type="module" src="./js/index.js"></script>
